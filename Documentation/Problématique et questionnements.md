@@ -7,3 +7,9 @@ On entend un peu partout qu'il y aune monté en puissance de la droite et de l'e
 Tout d'abord, il faut comprendre le fonctionnement du Conseil national : le peuple élit, chaque 4 ans, les 200 membres du Conseil national, le pouvoir législtaif en Suisse, et ce de manière proportionnel au nombre d'habitant de chaque canton (par exemple, Zurich, le plus grand canton suisse en terme d'habitant, élit 36 membres et Appenzell Rhodes-Intérieur, le plus petit, n'en élit que 1). Chaque membre fait ensuite partie d'une commission qui a pour mission première de procéder, selon le site [parlement.ch](https://www.parlament.ch/fr/organe/commissions) à l'examen préalable des objets qui leur sont assignés. En outre, elles suivent l'évolution sociale et politique et élaborent des propositions dans leur domaine de compétences. 
 
 Ainsi, dans cette recherche, nous nous intéresserons aux profils socio-démographique et à un certain nombre de propriété des agents, tel que leur appartenance politique, leur parcour politique ou encore leur commission parlementaire, afin de pouvoir répondre à un certain nombre de question, se basant notamment sur le clivage de la gauche et de la droite.
+
+## Questions de recherche
+
+- Comment a évolué la composition du Conseil national ?
+- Y a-t-il une corrélation entre le parti et le métier ?
+- Y a-t-il une cohérence dans l'assignation des commissions pour les conseillers (par rapport à la sensibilité du parti et par rapport à la profession) ?
