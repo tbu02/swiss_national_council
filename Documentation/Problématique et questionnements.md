@@ -13,3 +13,16 @@ Ainsi, dans cette recherche, nous nous intéresserons aux profils socio-démogra
 - Comment a évolué la composition du Conseil national ?
 - Y a-t-il une corrélation entre le parti et le métier ?
 - Y a-t-il une cohérence dans l'assignation des commissions pour les conseillers (par rapport à la sensibilité du parti et par rapport à la profession) ?
+- Y a-t-il des cantons qui évolue différement que d'autre ?
+- Y a-t-il un lien entre la composition du Conseil national et la composition du Conseil des Etats ?
+- Existe-t-il un parcours politique "type" pour accèder au Conseil national ?
+
+## Aspects de l'information à collecter
+
+- La composition du Conseil national
+- La composition du Conseil des Etats
+- Le parti politique
+- Le métier
+- La commission assignée
+- Le canton d'appartenance
+- La carrière politique
