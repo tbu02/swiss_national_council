@@ -12,7 +12,8 @@ Voici le lien pour la [liste des membres du Conseil national de la 52e législat
 
 ### L'assemblée fédéral 
 
-Voici le lien pour le détail de la [47e législature de l'Assemblée fédérale suisse](https://fr.wikipedia.org/wiki/47e_l%C3%A9gislature_de_l'Assembl%C3%A9e_f%C3%A9d%C3%A9rale_suisse) (la page n'est pas très détaillée, il faudrait privilégier celle-ci : [Élections fédérales suisses de 2003](https://fr.wikipedia.org/wiki/%C3%89lections_f%C3%A9d%C3%A9rales_suisses_de_2003))
+Voici le lien pour le détail de la [47e législature de l'Assemblée fédérale suisse](https://fr.wikipedia.org/wiki/47e_l%C3%A9gislature_de_l'Assembl%C3%A9e_f%C3%A9d%C3%A9rale_suisse) 
+- la page n'est pas très détaillée, il faudrait privilégier celle-ci : [Élections fédérales suisses de 2003](https://fr.wikipedia.org/wiki/%C3%89lections_f%C3%A9d%C3%A9rales_suisses_de_2003)
 
 Voici le lien pour le détail de la [50e législature de l'Assemblée fédérale suisse](https://fr.wikipedia.org/wiki/50e_l%C3%A9gislature_de_l'Assembl%C3%A9e_f%C3%A9d%C3%A9rale_suisse)
 
