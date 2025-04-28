@@ -26,7 +26,7 @@
   {
     "kind": 2,
     "language": "sparql",
-    "value": "   ## Count and inspect occupations and fields of work\r\n   SELECT (COUNT(*) as ?eff)\r\n    WHERE {\r\n        ?item {wdt:P106 wd:Q82955}  # politician 82955\r\n        UNION\r\n        ?item {wdt:P101 wd:Q7163}     # politics\r\n\r\n    ?item {wdt:P31 wd:Q5}  # Any instance of a human.\r\nSERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". } \r\n\r\n    }  \r\n    # LIMIT 10",
+    "value": "   ## Count and inspect occupations and fields of work\r\n   SELECT (COUNT(*) as ?eff)\r\n    WHERE {\r\n        {\r\n        ?item wdt:P106 wd:Q82955  # politician 82955\r\n        }\r\n        UNION\r\n        {\r\n        ?item wdt:P101 wd:Q7163     # politics\r\n        }\r\n\r\n    ?item wdt:P31 wd:Q5  # Any instance of a human.\r\nSERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". } \r\n\r\n    }  \r\nORDER BY DESC(?n)\r\n",
     "metadata": {}
   },
   {
@@ -38,13 +38,13 @@
   {
     "kind": 2,
     "language": "sparql",
-    "value": "### Swiss politician\r\nSELECT (count(*) as ?number)\r\nWHERE {\r\n    {?item wdt:P106 wd:Q82955}  # politician\r\n    \r\n    {?item wdt:P31 wd:Q5} # Any instance of a human.\r\n    {?item wdt:P27 wd:Q39} # Any Country of citizenship Switzerland.\r\n\r\n}\r\n            ",
+    "value": "### Swiss politician\r\nSELECT (count(*) as ?number)\r\nWHERE {\r\n    {?item wdt:P106 wd:Q82955}  # politician\r\n    \r\n    {?item wdt:P31 wd:Q5} # Any instance of a human.\r\n    {?item wdt:P27 wd:Q39} # Any Country of citizenship Switzerland.\r\n\r\n}\r\nORDER BY DESC(?n)",
     "metadata": {}
   },
   {
     "kind": 2,
     "language": "sparql",
-    "value": "### Swiss politician\r\nSELECT ?item ?itemLabel # (count(*) as ?number)\r\nWHERE {\r\n    {?item wdt:P106 wd:Q82955}  # politician\r\n    \r\n    {?item wdt:P31 wd:Q5} # Any instance of a human.\r\n    {?item wdt:P27 wd:Q39} # Any Country of citizenship Switzerland.\r\n\r\nSERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". } \r\n\r\n}\r\n\r\nLIMIT 20            ",
+    "value": "### Swiss politician\r\nSELECT ?item ?itemLabel # (count(*) as ?number)\r\nWHERE {\r\n    {?item wdt:P106 wd:Q82955}  # politician\r\n    \r\n    {?item wdt:P31 wd:Q5} # Any instance of a human.\r\n    {?item wdt:P27 wd:Q39} # Any Country of citizenship Switzerland.\r\n\r\nSERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". } \r\n\r\n}\r\nORDER BY DESC(?n)\r\nLIMIT 20            ",
     "metadata": {}
   },
   {
@@ -56,13 +56,31 @@
   {
     "kind": 2,
     "language": "sparql",
-    "value": "### Swiss politician from the national council\r\nSELECT (count(*) as ?number)\r\nWHERE {\r\n    {?item wdt:P106 wd:Q82955}  # politician\r\n    {?item wdt:P31 wd:Q5} # Any instance of a human.\r\n    {?item wdt:P27 wd:Q39} # Any Country of citizenship Switzerland.\r\n    {?item wdt:P39 wd:Q18510612} # Any Position held Member of the Swiss National Council\r\n\r\nSERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". } \r\n\r\n}\r\n         ",
+    "value": "### Swiss politician from the national council\r\nSELECT (count(*) as ?number)\r\nWHERE {\r\n    {?item wdt:P106 wd:Q82955}  # politician\r\n    {?item wdt:P31 wd:Q5} # Any instance of a human.\r\n    {?item wdt:P27 wd:Q39} # Any Country of citizenship Switzerland.\r\n    {?item wdt:P39 wd:Q18510612} # Any Position held Member of the Swiss National Council\r\n\r\nSERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". } \r\n\r\n}\r\nORDER BY DESC(?n)         ",
     "metadata": {}
   },
   {
     "kind": 2,
     "language": "sparql",
-    "value": "### Swiss politician from the national council\r\nSELECT ?item ?itemLabel # (count(*) as ?number)\r\nWHERE {\r\n    {?item wdt:P106 wd:Q82955}  # politician\r\n    {?item wdt:P31 wd:Q5} # Any instance of a human.\r\n    {?item wdt:P27 wd:Q39} # Any Country of citizenship Switzerland.\r\n    {?item wdt:P39 wd:Q18510612} # Any Position held Member of the Swiss National Council\r\n\r\nSERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". } \r\n\r\n}\r\n\r\nLIMIT 20",
+    "value": "### Swiss politician from the national council\r\nSELECT ?item ?itemLabel # (count(*) as ?number)\r\nWHERE {\r\n    {?item wdt:P106 wd:Q82955}  # politician\r\n    {?item wdt:P31 wd:Q5} # Any instance of a human.\r\n    {?item wdt:P27 wd:Q39} # Any Country of citizenship Switzerland.\r\n    {?item wdt:P39 wd:Q18510612} # Any Position held Member of the Swiss National Council\r\n\r\nSERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". } \r\n\r\n}\r\nORDER BY DESC(?n)\r\nLIMIT 20",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Les politiciens suisses du Conseil national depuis 2003",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "### Swiss politician from the national council since 2003\r\nSELECT (COUNT(*) AS ?number)\r\nWHERE {\r\n    ?item wdt:P106 wd:Q82955 .          # Profession: Politician\r\n    ?item wdt:P31 wd:Q5 .               # Instance of: Human\r\n    ?item wdt:P27 wd:Q39 .              # Citizenship: Switzerland\r\n    ?item p:P39 ?mandatStatement .      # Statement about a position held\r\n    ?mandatStatement ps:P39 wd:Q18510612 .   # Position held: Member of Swiss National Council\r\n    OPTIONAL { ?mandatStatement pq:P580 ?start . }  # Start time of the mandate\r\n\r\n    FILTER(BOUND(?start) && YEAR(?start) > 2003)\r\n\r\n    SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". }\r\n}\r\n\r\nORDER BY DESC(?n)",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "SELECT ?item ?itemLabel\r\nWHERE {\r\n    ?item wdt:P106 wd:Q82955 .          # Profession: Politician\r\n    ?item wdt:P31 wd:Q5 .               # Instance of: Human\r\n    ?item wdt:P27 wd:Q39 .              # Citizenship: Switzerland\r\n    ?item p:P39 ?mandatStatement .      # Statement about a position held\r\n    ?mandatStatement ps:P39 wd:Q18510612 .   # Position held: Member of Swiss National Council\r\n    OPTIONAL { ?mandatStatement pq:P580 ?start . }  # Start time of the mandate\r\n\r\n    FILTER(BOUND(?start) && YEAR(?start) > 2003)\r\n\r\n    SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". }\r\n}\r\nORDER BY DESC(?n)\r\nLimit 20",
     "metadata": {}
   }
 ]
