@@ -1,0 +1,38 @@
+[
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Importation dans Allegrograph\r\n\r\nDans ce Sparqlbook, nous préparons les données à l'importation pour allegrograph.\r\nEn premier lieu, on vérifie les données de base de la population",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX wd: <http://www.wikidata.org/entity/>\r\nPREFIX wdt: <http://www.wikidata.org/prop/direct/>\r\nPREFIX wikibase: <http://wikiba.se/ontology#>\r\nPREFIX bd: <http://www.bigdata.com/rdf#>\r\n\r\nSELECT DISTINCT ?item ?itemLabel ?gender ?birthDate\r\nWHERE {\r\n\r\nSERVICE <https://query.wikidata.org/sparql>\r\n\r\n{\r\n    {?item wdt:P106 wd:Q82955}  # Politician\r\n    UNION\r\n    {?item wdt:P101 wd:Q7163}   # Politics\r\n     ?item wdt:P31 wd:Q5;        # Any instance of a human\r\n          wdt:P27 wd:Q39;       # Any country of citizenship: Switzerland\r\n          p:P39 ?mandatStatement.  # Position held: Member of the Swiss National Council\r\n          \r\n    ?mandatStatement ps:P39 wd:Q18510612;  # Member of Swiss National Council\r\n                  pq:P580 ?start.  # Start time of the mandate\r\n         \r\n    \r\n    OPTIONAL { ?mandatStatement pq:P580 ?start . }\r\n    \r\n    FILTER(BOUND(?start) && xsd:dateTime(?start) >= \"2003-01-01T00:00:00Z\"^^xsd:dateTime)\r\n\r\n    OPTIONAL {\r\n        ?item p:P39 ?reElectionStatement .\r\n        ?reElectionStatement ps:P39 wd:Q18510612 .\r\n        ?reElectionStatement pq:P580 ?reElectionStart .\r\n        FILTER(xsd:dateTime(?reElectionStart) >= \"2003-01-01T00:00:00Z\"^^xsd:dateTime)\r\n    }\r\n    ?item wdt:P569 ?birthDate;          \r\n          wdt:P21 ?gender.\r\n    \r\n     BIND ( ?itemLabel as ?itemLabel)\r\n        SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\" }\r\n}\r\n}\r\nORDER BY DESC(?eff)\r\nLIMIT 10",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Préparation à l'importation",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX wd: <http://www.wikidata.org/entity/>\r\nPREFIX wdt: <http://www.wikidata.org/prop/direct/>\r\nPREFIX wikibase: <http://wikiba.se/ontology#>\r\nPREFIX bd: <http://www.bigdata.com/rdf#>\r\n\r\nCONSTRUCT \r\n        {?item  rdfs:label ?itemLabel.\r\n           ?item wdt:P21 ?gender.\r\n           ?item wdt:P569 ?year.\r\n           ?item  rdf:type wd:Q5. }\r\n        \r\n        WHERE {\r\n          \r\n        SERVICE <https://query.wikidata.org/sparql>\r\n\r\n{\r\n    {?item wdt:P106 wd:Q82955}  # Politician\r\n    UNION\r\n    {?item wdt:P101 wd:Q7163}   # Politics\r\n     ?item wdt:P31 wd:Q5;        # Any instance of a human\r\n          wdt:P27 wd:Q39;       # Any country of citizenship: Switzerland\r\n          wdt:P39 ?mandatStatement.  # Position held: Member of the Swiss National Council\r\n          \r\n    ?mandatStatement ps:P39 wd:Q18510612;  # Member of Swiss National Council\r\n                  pq:P580 ?start.  # Start time of the mandate\r\n         \r\n    \r\n    OPTIONAL { ?mandatStatement pq:P580 ?start . }\r\n    \r\n    FILTER(BOUND(?start) && xsd:dateTime(?start) >= \"2003-01-01T00:00:00Z\"^^xsd:dateTime)\r\n\r\n    OPTIONAL {\r\n        ?item p:P39 ?reElectionStatement .\r\n        ?reElectionStatement ps:P39 wd:Q18510612 .\r\n        ?reElectionStatement pq:P580 ?reElectionStart .\r\n        FILTER(xsd:dateTime(?reElectionStart) >= \"2003-01-01T00:00:00Z\"^^xsd:dateTime)\r\n    }\r\n    ?item wdt:P569 ?birthDate;          \r\n          wdt:P21 ?gender.\r\n          \r\n        \r\n     BIND ( ?itemLabel as ?itemLabel)\r\n        SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\" }\r\n}\r\n        }\r\n        \r\n        LIMIT 5",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Importer les triplets dans un graphe",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "",
+    "metadata": {}
+  }
+]
