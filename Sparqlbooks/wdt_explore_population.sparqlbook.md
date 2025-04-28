@@ -179,3 +179,32 @@ WHERE {
 ORDER BY DESC(?n)
 Limit 20
 ```
+## Inclure les réélus pour 2003
+
+```sparql
+### Swiss politician from the national council since 2003, including re-elected politicians
+SELECT (COUNT(*) AS ?number)
+WHERE {
+    ?item wdt:P106 wd:Q82955 .          # Profession: Politician
+    ?item wdt:P31 wd:Q5 .               # Instance of: Human
+    ?item wdt:P27 wd:Q39 .              # Citizenship: Switzerland
+    ?item p:P39 ?mandatStatement .      # Statement about a position held
+    ?mandatStatement ps:P39 wd:Q18510612 .   # Position held: Member of Swiss National Council
+    
+    # Get the start time of the mandate
+    OPTIONAL { ?mandatStatement pq:P580 ?start . }
+    
+    # Filter for mandates that started after 2003
+    FILTER(BOUND(?start) && YEAR(?start) > 2003)
+
+    # If no start time, allow previous mandates (before 2003) that are still active after 2003
+    OPTIONAL {
+        ?item p:P39 ?reElectionStatement .
+        ?reElectionStatement ps:P39 wd:Q18510612 .
+        ?reElectionStatement pq:P580 ?reElectionStart .
+        FILTER(YEAR(?reElectionStart) > 2003)
+    }
+    
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+}
+```
