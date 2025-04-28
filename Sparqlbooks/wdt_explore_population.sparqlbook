@@ -44,6 +44,18 @@
   {
     "kind": 2,
     "language": "sparql",
+    "value": "## Swiss politics\r\nSELECT (count(*) as ?number)\r\nWHERE {\r\n    {?item wdt:P101 wd:Q7163}  # politics\r\n    \r\n    {?item wdt:P31 wd:Q5} # Any instance of a human.\r\n    {?item wdt:P27 wd:Q39} # Any Country of citizenship Switzerland.\r\n\r\n}\r\nORDER BY DESC(?n)",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "Cette requête indique qu'il n'y a pas beosin d'utiliser un champs (field)",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
     "value": "### Swiss politician\r\nSELECT ?item ?itemLabel # (count(*) as ?number)\r\nWHERE {\r\n    {?item wdt:P106 wd:Q82955}  # politician\r\n    \r\n    {?item wdt:P31 wd:Q5} # Any instance of a human.\r\n    {?item wdt:P27 wd:Q39} # Any Country of citizenship Switzerland.\r\n\r\nSERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". } \r\n\r\n}\r\nORDER BY DESC(?n)\r\nLIMIT 20            ",
     "metadata": {}
   },
@@ -104,7 +116,7 @@
   {
     "kind": 2,
     "language": "sparql",
-    "value": "SELECT (count(*) as ?number)\r\n    WHERE {\r\n      {?item wdt:P106 wd:Q82955}  # Politician\r\n      UNION\r\n      {?item wdt:P101 wd:Q7163}     # Politics\r\n\r\n      ?item wdt:P31 wd:Q5 .        # Any instance of a human\r\n      ?item wdt:P27 wd:Q39 .       # Any country of citizenship: Switzerland\r\n      ?item p:P39 ?mandatStatement .  # Position held: Member of the Swiss National Council\r\n      ?mandatStatement ps:P39 wd:Q18510612 .  # Member of Swiss National Council\r\n      \r\n      # Get start time of the mandate\r\n      OPTIONAL { ?mandatStatement pq:P580 ?start . }\r\n      \r\n      # Extract the year from the start date and filter for those after 2003\r\n      BIND(REPLACE(str(?start), \"(.*)([0-9]{4})(.*)\", \"$2\") AS ?year)\r\n      FILTER(xsd:integer(?year) > 2003)\r\n\r\n      \r\n      SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\", \"fr\", \"de-ch\". }\r\n    }",
+    "value": "SELECT (count(*) as ?number)\r\n    WHERE {\r\n      {?item wdt:P106 wd:Q82955}  # Politician\r\n      ?item wdt:P31 wd:Q5 .        # Any instance of a human\r\n      ?item wdt:P27 wd:Q39 .       # Any country of citizenship: Switzerland\r\n      ?item p:P39 ?mandatStatement .  # Position held: Member of the Swiss National Council\r\n      ?mandatStatement ps:P39 wd:Q18510612 .  # Member of Swiss National Council\r\n      \r\n      # Get start time of the mandate\r\n      OPTIONAL { ?mandatStatement pq:P580 ?start . }\r\n      \r\n      # Extract the year from the start date and filter for those after 2003\r\n      BIND(REPLACE(str(?start), \"(.*)([0-9]{4})(.*)\", \"$2\") AS ?year)\r\n      FILTER(xsd:integer(?year) > 2003)\r\n\r\n      \r\n      SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\", \"fr\", \"de-ch\". }\r\n    }",
     "metadata": {}
   },
   {
@@ -116,7 +128,25 @@
   {
     "kind": 2,
     "language": "sparql",
-    "value": "SELECT (COUNT(*) AS ?number)\r\nWHERE {\r\n    {?item wdt:P106 wd:Q82955}          # Profession: Politician\r\n    UNION\r\n    {?item wdt:101 wd:Q7163}            # Field : Politics\r\n    ?item wdt:P31 wd:Q5 .               # Instance of: Human\r\n    ?item wdt:P27 wd:Q39 .              # Citizenship: Switzerland\r\n    ?item p:P39 ?mandatStatement .      # Statement about a position held\r\n    ?mandatStatement ps:P39 wd:Q18510612 .   # Position held: Member of Swiss National Council\r\n    \r\n    # Get the start time of the mandate\r\n    OPTIONAL { ?mandatStatement pq:P580 ?start . }\r\n    \r\n    # Filter for mandates that started after 2003\r\n    FILTER(BOUND(?start) && xsd:dateTime(?start) >= \"2003-01-01T00:00:00Z\"^^xsd:dateTime)\r\n\r\n    # If no start time, allow previous mandates (before 2003) that are still active after 2003\r\n    OPTIONAL {\r\n        ?item p:P39 ?reElectionStatement .\r\n        ?reElectionStatement ps:P39 wd:Q18510612 .\r\n        ?reElectionStatement pq:P580 ?reElectionStart .\r\n        FILTER(xsd:dateTime(?reElectionStart) >= \"2003-01-01T00:00:00Z\"^^xsd:dateTime)\r\n    }\r\n\r\n    SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\" . }\r\n}",
+    "value": "SELECT (COUNT(*) AS ?number)\r\nWHERE {\r\n    {?item wdt:P106 wd:Q82955}          # Profession: Politician\r\n    ?item wdt:P31 wd:Q5 .               # Instance of: Human\r\n    ?item wdt:P27 wd:Q39 .              # Citizenship: Switzerland\r\n    ?item p:P39 ?mandatStatement .      # Statement about a position held\r\n    ?mandatStatement ps:P39 wd:Q18510612 .   # Position held: Member of Swiss National Council\r\n    \r\n    # Get the start time of the mandate\r\n    OPTIONAL { ?mandatStatement pq:P580 ?start . }\r\n    \r\n    # Filter for mandates that started after 2003\r\n    FILTER(BOUND(?start) && xsd:dateTime(?start) >= \"2003-01-01T00:00:00Z\"^^xsd:dateTime)\r\n\r\n    # If no start time, allow previous mandates (before 2003) that are still active after 2003\r\n    OPTIONAL {\r\n        ?item p:P39 ?reElectionStatement .\r\n        ?reElectionStatement ps:P39 wd:Q18510612 .\r\n        ?reElectionStatement pq:P580 ?reElectionStart .\r\n        FILTER(xsd:dateTime(?reElectionStart) >= \"2003-01-01T00:00:00Z\"^^xsd:dateTime)\r\n    }\r\n\r\n    SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\" . }\r\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "Cette manière de filtrer ne fonctionne pas correctement... Donc je filtre avec l'âge des parlementaires. lors de la législature 47 (2003 à 2007), l'élu le plus âgé est né en 1934. Filtrons donc en 1934.",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "### Swiss politician from the national council born after 1934\r\nSELECT (count(*) as ?number)\r\nWHERE {\r\n    {?item wdt:P106 wd:Q82955}  # politician\r\n    {?item wdt:P31 wd:Q5} # Any instance of a human.\r\n    {?item wdt:P27 wd:Q39} # Any Country of citizenship Switzerland.\r\n    {?item wdt:P39 wd:Q18510612} # Any Position held Member of the Swiss National Council\r\n    {?item wdt:P569 ?birthDate}\r\n    \r\n\r\n    BIND(REPLACE(str(?birthDate), \"(.*)([0-9]{4})(.*)\", \"$2\") AS ?year)\r\n    FILTER(xsd:integer(?year) >= 1934 )\r\n\r\nSERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". } \r\n\r\n}\r\nORDER BY DESC(?n)\r\n# LIMIT 20",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "Avec un résultat de 822, le résultat est déjà plus satisfaisant. Je vais donc utiliser ce filtre.",
     "metadata": {}
   }
 ]

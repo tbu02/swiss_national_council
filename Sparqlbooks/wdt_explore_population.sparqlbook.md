@@ -95,6 +95,20 @@ ORDER BY DESC(?n)
 ```
 
 ```sparql
+## Swiss politics
+SELECT (count(*) as ?number)
+WHERE {
+    {?item wdt:P101 wd:Q7163}  # politics
+    
+    {?item wdt:P31 wd:Q5} # Any instance of a human.
+    {?item wdt:P27 wd:Q39} # Any Country of citizenship Switzerland.
+
+}
+ORDER BY DESC(?n)
+```
+Cette requête indique qu'il n'y a pas beosin d'utiliser un champs (field)
+
+```sparql
 ### Swiss politician
 SELECT ?item ?itemLabel # (count(*) as ?number)
 WHERE {
@@ -214,9 +228,6 @@ Nouveau test 1 (pas concluant) :
 SELECT (count(*) as ?number)
     WHERE {
       {?item wdt:P106 wd:Q82955}  # Politician
-      UNION
-      {?item wdt:P101 wd:Q7163}     # Politics
-
       ?item wdt:P31 wd:Q5 .        # Any instance of a human
       ?item wdt:P27 wd:Q39 .       # Any country of citizenship: Switzerland
       ?item p:P39 ?mandatStatement .  # Position held: Member of the Swiss National Council
@@ -239,8 +250,6 @@ Nouveau test 2 (concluant, mais pas satisfaisant):
 SELECT (COUNT(*) AS ?number)
 WHERE {
     {?item wdt:P106 wd:Q82955}          # Profession: Politician
-    UNION
-    {?item wdt:101 wd:Q7163}            # Field : Politics
     ?item wdt:P31 wd:Q5 .               # Instance of: Human
     ?item wdt:P27 wd:Q39 .              # Citizenship: Switzerland
     ?item p:P39 ?mandatStatement .      # Statement about a position held
@@ -263,3 +272,26 @@ WHERE {
     SERVICE wikibase:label { bd:serviceParam wikibase:language "en" . }
 }
 ```
+Cette manière de filtrer ne fonctionne pas correctement... Donc je filtre avec l'âge des parlementaires. lors de la législature 47 (2003 à 2007), l'élu le plus âgé est né en 1934. Filtrons donc en 1934.
+
+```sparql
+### Swiss politician from the national council born after 1934
+SELECT (count(*) as ?number)
+WHERE {
+    {?item wdt:P106 wd:Q82955}  # politician
+    {?item wdt:P31 wd:Q5} # Any instance of a human.
+    {?item wdt:P27 wd:Q39} # Any Country of citizenship Switzerland.
+    {?item wdt:P39 wd:Q18510612} # Any Position held Member of the Swiss National Council
+    {?item wdt:P569 ?birthDate}
+    
+
+    BIND(REPLACE(str(?birthDate), "(.*)([0-9]{4})(.*)", "$2") AS ?year)
+    FILTER(xsd:integer(?year) >= 1934 )
+
+SERVICE wikibase:label { bd:serviceParam wikibase:language "en". } 
+
+}
+ORDER BY DESC(?n)
+# LIMIT 20
+```
+Avec un résultat de 822, le résultat est déjà plus satisfaisant. Je vais donc utiliser ce filtre.

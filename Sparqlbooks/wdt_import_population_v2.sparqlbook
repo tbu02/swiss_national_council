@@ -1,0 +1,26 @@
+[
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Importation dans AllegroGraph, mais sans les filtres\r\n\r\nL'essaie initiale ne fonctionnant pas, je vais tenter ici sans les filtres, sauf l'âge des parlementaires. L'élu le plus âgé de la 47 législature est née en 1934. On peut donc filtrer depuis cet âge là.",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX wd: <http://www.wikidata.org/entity/>\r\nPREFIX wdt: <http://www.wikidata.org/prop/direct/>\r\nPREFIX wikibase: <http://wikiba.se/ontology#>\r\nPREFIX bd: <http://www.bigdata.com/rdf#>\r\n\r\nSELECT DISTINCT ?item ?itemLabel ?gender ?birthDate\r\nWHERE {\r\n    ?item wdt:P106 wd:Q82955 ;    # Politician\r\n          wdt:P31 wd:Q5 ;         # Human\r\n          wdt:P27 wd:Q39 ;        # Swiss\r\n          wdt:P39 wd:Q18510612 ;  # National Council\r\n          wdt:P569 ?birthDate ;\r\n          wdt:P21 ?gender .\r\n    \r\n    BIND(YEAR(?birthDate) AS ?year)\r\n    FILTER(?year >= 1934)\r\n    \r\n    SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". }\r\n}\r\nORDER BY DESC(?birthDate)\r\nLIMIT 10",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "### Préparation des données à importer\r\n",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX wd: <http://www.wikidata.org/entity/>\r\nPREFIX wdt: <http://www.wikidata.org/prop/direct/>\r\nPREFIX wikibase: <http://wikiba.se/ontology#>\r\nPREFIX bd: <http://www.bigdata.com/rdf#>\r\n\r\nCONSTRUCT \r\n        {?item  rdfs:label ?itemLabel.\r\n           ?item wdt:P21 ?gender.\r\n           ?item wdt:P569 ?year.\r\n           ?item  rdf:type wd:Q5. }\r\n        \r\n        WHERE {\r\n       \r\n        SERVICE <https://query.wikidata.org/sparql>\r\n        {\r\n              \r\n           ?item wdt:P106 wd:Q82955 ;    # Politician\r\n          wdt:P31 wd:Q5 ;         # Human\r\n          wdt:P27 wd:Q39 ;        # Swiss\r\n          wdt:P39 wd:Q18510612 ;  # National Council\r\n          wdt:P569 ?birthDate ;\r\n          wdt:P21 ?gender .\r\n    \r\n    BIND(YEAR(?birthDate) AS ?year)\r\n    FILTER(?year >= 1934)\r\n    \r\n    SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". }\r\n        }\r\n        }\r\n        LIMIT 5",
+    "metadata": {}
+  }
+]
