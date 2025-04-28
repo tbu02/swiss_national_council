@@ -1,6 +1,6 @@
 ## Objets (avec leurs propriétés)
 
-### Membres du Conseil national
+### Personne
 
 - Prénom & Nom
 - Date de naissance (âge)
