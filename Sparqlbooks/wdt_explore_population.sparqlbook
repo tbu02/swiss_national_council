@@ -82,5 +82,17 @@
     "language": "sparql",
     "value": "SELECT ?item ?itemLabel\r\nWHERE {\r\n    ?item wdt:P106 wd:Q82955 .          # Profession: Politician\r\n    ?item wdt:P31 wd:Q5 .               # Instance of: Human\r\n    ?item wdt:P27 wd:Q39 .              # Citizenship: Switzerland\r\n    ?item p:P39 ?mandatStatement .      # Statement about a position held\r\n    ?mandatStatement ps:P39 wd:Q18510612 .   # Position held: Member of Swiss National Council\r\n    OPTIONAL { ?mandatStatement pq:P580 ?start . }  # Start time of the mandate\r\n\r\n    FILTER(BOUND(?start) && YEAR(?start) > 2003)\r\n\r\n    SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". }\r\n}\r\nORDER BY DESC(?n)\r\nLimit 20",
     "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Inclure les réélus pour 2003",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "### Swiss politician from the national council since 2003, including re-elected politicians\r\nSELECT (COUNT(*) AS ?number)\r\nWHERE {\r\n    ?item wdt:P106 wd:Q82955 .          # Profession: Politician\r\n    ?item wdt:P31 wd:Q5 .               # Instance of: Human\r\n    ?item wdt:P27 wd:Q39 .              # Citizenship: Switzerland\r\n    ?item p:P39 ?mandatStatement .      # Statement about a position held\r\n    ?mandatStatement ps:P39 wd:Q18510612 .   # Position held: Member of Swiss National Council\r\n    \r\n    # Get the start time of the mandate\r\n    OPTIONAL { ?mandatStatement pq:P580 ?start . }\r\n    \r\n    # Filter for mandates that started after 2003\r\n    FILTER(BOUND(?start) && YEAR(?start) > 2003)\r\n\r\n    # If no start time, allow previous mandates (before 2003) that are still active after 2003\r\n    OPTIONAL {\r\n        ?item p:P39 ?reElectionStatement .\r\n        ?reElectionStatement ps:P39 wd:Q18510612 .\r\n        ?reElectionStatement pq:P580 ?reElectionStart .\r\n        FILTER(YEAR(?reElectionStart) > 2003)\r\n    }\r\n    \r\n    SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". }\r\n}",
+    "metadata": {}
   }
 ]
