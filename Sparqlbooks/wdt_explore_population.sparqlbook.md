@@ -208,7 +208,7 @@ WHERE {
     SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
 }
 ```
-Nouveau test (pas concluant) :
+Nouveau test 1 (pas concluant) :
 
 ```sparql
 SELECT (count(*) as ?number)
@@ -230,6 +230,36 @@ SELECT (count(*) as ?number)
       FILTER(xsd:integer(?year) > 2003)
 
       
-      SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+      SERVICE wikibase:label { bd:serviceParam wikibase:language "en", "fr", "de-ch". }
     }
+```
+Nouveau test 2 (concluant, mais pas satisfaisant):
+
+```sparql
+SELECT (COUNT(*) AS ?number)
+WHERE {
+    {?item wdt:P106 wd:Q82955}          # Profession: Politician
+    UNION
+    {?item wdt:101 wd:Q7163}            # Field : Politics
+    ?item wdt:P31 wd:Q5 .               # Instance of: Human
+    ?item wdt:P27 wd:Q39 .              # Citizenship: Switzerland
+    ?item p:P39 ?mandatStatement .      # Statement about a position held
+    ?mandatStatement ps:P39 wd:Q18510612 .   # Position held: Member of Swiss National Council
+    
+    # Get the start time of the mandate
+    OPTIONAL { ?mandatStatement pq:P580 ?start . }
+    
+    # Filter for mandates that started after 2003
+    FILTER(BOUND(?start) && xsd:dateTime(?start) >= "2003-01-01T00:00:00Z"^^xsd:dateTime)
+
+    # If no start time, allow previous mandates (before 2003) that are still active after 2003
+    OPTIONAL {
+        ?item p:P39 ?reElectionStatement .
+        ?reElectionStatement ps:P39 wd:Q18510612 .
+        ?reElectionStatement pq:P580 ?reElectionStart .
+        FILTER(xsd:dateTime(?reElectionStart) >= "2003-01-01T00:00:00Z"^^xsd:dateTime)
+    }
+
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "en" . }
+}
 ```
