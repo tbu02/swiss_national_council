@@ -1,0 +1,14 @@
+[
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Nombre de propriété pour la population\r\n\r\nIci, on va voir combien de propriété il existe pour ma population, à savoir les conseillers nationaux depuis 2003",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX wdt: <http://www.wikidata.org/prop/direct/>\r\nPREFIX wd: <http://www.wikidata.org/entity/>\r\nPREFIX wikibase: <http://wikiba.se/ontology#>\r\nPREFIX bd: <http://www.bigdata.com/rdf#>\r\n\r\nSELECT ?p ?propLabel ?eff\r\nWHERE {\r\n  {\r\n    SELECT ?p  (count(*) as ?eff)\r\n    WHERE {\r\n      {?item wdt:P106 wd:Q82955}  # Politician\r\n      UNION\r\n      {?item wdt:P101 wd:Q7163}     # Politics\r\n\r\n      ?item wdt:P31 wd:Q5 .        # Any instance of a human\r\n      ?item wdt:P27 wd:Q39 .       # Any country of citizenship: Switzerland\r\n      ?item p:P39 ?mandatStatement .  # Position held: Member of the Swiss National Council\r\n      ?mandatStatement ps:P39 wd:Q18510612 .  # Member of Swiss National Council\r\n      \r\n      # Get start time of the mandate\r\n      OPTIONAL { ?mandatStatement pq:P580 ?start . }\r\n      \r\n      # Extract the year from the start date and filter for those after 2003\r\n      BIND(REPLACE(str(?start), \"(.*)([0-9]{4})(.*)\", \"$2\") AS ?year)\r\n      FILTER(xsd:integer(?year) > 2003)\r\n\r\n      ?item ?p ?o .  # Query properties of the item\r\n      \r\n    }\r\n    GROUP BY ?p\r\n  }\r\n  \r\n  # Get the original property (in the statement construct)\r\n  ?prop wikibase:directClaim ?p .\r\n\r\n  SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". }\r\n}\r\nORDER BY DESC(?eff)\r\nLIMIT 20",
+    "metadata": {}
+  }
+]

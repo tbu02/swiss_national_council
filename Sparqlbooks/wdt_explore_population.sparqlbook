@@ -94,5 +94,17 @@
     "language": "sparql",
     "value": "### Swiss politician from the national council since 2003, including re-elected politicians\r\nSELECT (COUNT(*) AS ?number)\r\nWHERE {\r\n    ?item wdt:P106 wd:Q82955 .          # Profession: Politician\r\n    ?item wdt:P31 wd:Q5 .               # Instance of: Human\r\n    ?item wdt:P27 wd:Q39 .              # Citizenship: Switzerland\r\n    ?item p:P39 ?mandatStatement .      # Statement about a position held\r\n    ?mandatStatement ps:P39 wd:Q18510612 .   # Position held: Member of Swiss National Council\r\n    \r\n    # Get the start time of the mandate\r\n    OPTIONAL { ?mandatStatement pq:P580 ?start . }\r\n    \r\n    # Filter for mandates that started after 2003\r\n    FILTER(BOUND(?start) && YEAR(?start) > 2003)\r\n\r\n    # If no start time, allow previous mandates (before 2003) that are still active after 2003\r\n    OPTIONAL {\r\n        ?item p:P39 ?reElectionStatement .\r\n        ?reElectionStatement ps:P39 wd:Q18510612 .\r\n        ?reElectionStatement pq:P580 ?reElectionStart .\r\n        FILTER(YEAR(?reElectionStart) > 2003)\r\n    }\r\n    \r\n    SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". }\r\n}",
     "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "Nouveau test (pas concluant) :",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "SELECT (count(*) as ?number)\r\n    WHERE {\r\n      {?item wdt:P106 wd:Q82955}  # Politician\r\n      UNION\r\n      {?item wdt:P101 wd:Q7163}     # Politics\r\n\r\n      ?item wdt:P31 wd:Q5 .        # Any instance of a human\r\n      ?item wdt:P27 wd:Q39 .       # Any country of citizenship: Switzerland\r\n      ?item p:P39 ?mandatStatement .  # Position held: Member of the Swiss National Council\r\n      ?mandatStatement ps:P39 wd:Q18510612 .  # Member of Swiss National Council\r\n      \r\n      # Get start time of the mandate\r\n      OPTIONAL { ?mandatStatement pq:P580 ?start . }\r\n      \r\n      # Extract the year from the start date and filter for those after 2003\r\n      BIND(REPLACE(str(?start), \"(.*)([0-9]{4})(.*)\", \"$2\") AS ?year)\r\n      FILTER(xsd:integer(?year) > 2003)\r\n\r\n      \r\n      SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". }\r\n    }",
+    "metadata": {}
   }
 ]
