@@ -295,3 +295,83 @@ ORDER BY DESC(?n)
 # LIMIT 20
 ```
 Avec un résultat de 822, le résultat est déjà plus satisfaisant. Je vais donc utiliser ce filtre.
+## Nombre de propriété dans la population
+
+```sparql
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+
+SELECT ?p ?propLabel ?eff
+WHERE {
+{
+SELECT ?p  (count(*) as ?eff)
+WHERE {
+    {?item wdt:P106 wd:Q82955}  # politician
+    {?item wdt:P31 wd:Q5} # Any instance of a human.
+    {?item wdt:P27 wd:Q39} # Any Country of citizenship Switzerland.
+    {?item wdt:P39 wd:Q18510612} # Any Position held Member of the Swiss National Council
+    {?item wdt:P569 ?birthDate}
+    
+?item  ?p ?o.
+
+    BIND(REPLACE(str(?birthDate), "(.*)([0-9]{4})(.*)", "$2") AS ?year)
+    FILTER(xsd:integer(?year) >= 1934 )
+
+}
+GROUP BY ?p 
+
+    }
+
+# get the original property (in the the statement construct)     
+?prop wikibase:directClaim ?p .
+
+SERVICE wikibase:label { bd:serviceParam wikibase:language "en". } 
+
+
+}  
+ORDER BY DESC(?eff)
+#LIMIT 20
+
+
+```
+## Même opération, mais en limitant moins la recherche
+Afin d'avoir plus que 823 résulatas, je vais supprimer la requête de membre du Conseil national. Ce qui permettra également d'avoir une répartition binaire entre deux sous-population.
+
+```sparql
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+
+SELECT ?p ?propLabel ?eff
+WHERE {
+{
+SELECT ?p  (count(*) as ?eff)
+WHERE {
+    {?item wdt:P106 wd:Q82955}  # politician
+    {?item wdt:P31 wd:Q5} # Any instance of a human.
+    {?item wdt:P27 wd:Q39} # Any Country of citizenship Switzerland.
+    {?item wdt:P569 ?birthDate}
+    
+?item  ?p ?o.
+
+    BIND(REPLACE(str(?birthDate), "(.*)([0-9]{4})(.*)", "$2") AS ?year)
+    FILTER(xsd:integer(?year) >= 1934 )
+
+}
+GROUP BY ?p 
+
+    }
+
+# get the original property (in the the statement construct)     
+?prop wikibase:directClaim ?p .
+
+SERVICE wikibase:label { bd:serviceParam wikibase:language "en". } 
+
+
+}  
+ORDER BY DESC(?eff)
+#LIMIT 20
+```
