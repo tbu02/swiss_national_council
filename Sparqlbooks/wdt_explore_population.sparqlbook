@@ -148,5 +148,29 @@
     "language": "markdown",
     "value": "Avec un résultat de 822, le résultat est déjà plus satisfaisant. Je vais donc utiliser ce filtre.",
     "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Nombre de propriété dans la population",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX wdt: <http://www.wikidata.org/prop/direct/>\r\nPREFIX wd: <http://www.wikidata.org/entity/>\r\nPREFIX wikibase: <http://wikiba.se/ontology#>\r\nPREFIX bd: <http://www.bigdata.com/rdf#>\r\n\r\nSELECT ?p ?propLabel ?eff\r\nWHERE {\r\n{\r\nSELECT ?p  (count(*) as ?eff)\r\nWHERE {\r\n    {?item wdt:P106 wd:Q82955}  # politician\r\n    {?item wdt:P31 wd:Q5} # Any instance of a human.\r\n    {?item wdt:P27 wd:Q39} # Any Country of citizenship Switzerland.\r\n    {?item wdt:P39 wd:Q18510612} # Any Position held Member of the Swiss National Council\r\n    {?item wdt:P569 ?birthDate}\r\n    \r\n?item  ?p ?o.\r\n\r\n    BIND(REPLACE(str(?birthDate), \"(.*)([0-9]{4})(.*)\", \"$2\") AS ?year)\r\n    FILTER(xsd:integer(?year) >= 1934 )\r\n\r\n}\r\nGROUP BY ?p \r\n\r\n    }\r\n\r\n# get the original property (in the the statement construct)     \r\n?prop wikibase:directClaim ?p .\r\n\r\nSERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". } \r\n\r\n\r\n}  \r\nORDER BY DESC(?eff)\r\n#LIMIT 20\r\n\r\n",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Même opération, mais en limitant moins la recherche\r\nAfin d'avoir plus que 823 résulatas, je vais supprimer la requête de membre du Conseil national. Ce qui permettra également d'avoir une répartition binaire entre deux sous-population.",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX wdt: <http://www.wikidata.org/prop/direct/>\r\nPREFIX wd: <http://www.wikidata.org/entity/>\r\nPREFIX wikibase: <http://wikiba.se/ontology#>\r\nPREFIX bd: <http://www.bigdata.com/rdf#>\r\n\r\nSELECT ?p ?propLabel ?eff\r\nWHERE {\r\n{\r\nSELECT ?p  (count(*) as ?eff)\r\nWHERE {\r\n    {?item wdt:P106 wd:Q82955}  # politician\r\n    {?item wdt:P31 wd:Q5} # Any instance of a human.\r\n    {?item wdt:P27 wd:Q39} # Any Country of citizenship Switzerland.\r\n    {?item wdt:P569 ?birthDate}\r\n    \r\n?item  ?p ?o.\r\n\r\n    BIND(REPLACE(str(?birthDate), \"(.*)([0-9]{4})(.*)\", \"$2\") AS ?year)\r\n    FILTER(xsd:integer(?year) >= 1934 )\r\n\r\n}\r\nGROUP BY ?p \r\n\r\n    }\r\n\r\n# get the original property (in the the statement construct)     \r\n?prop wikibase:directClaim ?p .\r\n\r\nSERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". } \r\n\r\n\r\n}  \r\nORDER BY DESC(?eff)\r\n#LIMIT 20",
+    "metadata": {}
   }
 ]
