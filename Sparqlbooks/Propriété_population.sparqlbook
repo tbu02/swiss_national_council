@@ -2,7 +2,7 @@
   {
     "kind": 1,
     "language": "markdown",
-    "value": "## Nombre de propriété pour la population\r\n\r\nIci, on va voir combien de propriété il existe pour ma population, à savoir les conseillers nationaux. Retrouvez une liste des informations disponibles dans Wikidata [ici](https://github.com/tbu02/swiss_national_council/blob/main/Wikidata/wdt_person_prorpieties_20250605.csv).",
+    "value": "## Nombre de propriété pour la population\r\n\r\nIci, on va voir combien de propriété il existe pour ma population, à savoir les conseillers nationaux. Retrouvez une liste des informations disponibles dans Wikidata [ici](https://github.com/tbu02/swiss_national_council/blob/main/Wikidata/wdt_persons_properties_20250605.csv).",
     "metadata": {}
   },
   {
