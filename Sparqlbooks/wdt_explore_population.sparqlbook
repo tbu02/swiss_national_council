@@ -164,7 +164,7 @@
   {
     "kind": 1,
     "language": "markdown",
-    "value": "Ainsi, nous obtenons 2871 humains, politiciens, de nationalité Suisse et qui font ou ont fait partie du Conseil national.\r\n\r\nPour retrouvez les propriétés de la population, [cliquez ici](https://github.com/tbu02/swiss_national_council/blob/main/Sparqlbooks/Propri%C3%A9t%C3%A9_population.sparqlbook.md).\r\n\r\nPour retrouver une liste des informations disponibles dans Wikidata, [cliquez ici](https://github.com/tbu02/swiss_national_council/blob/main/Wikidata/wdt_person_prorpieties_20250605.csv).",
+    "value": "Ainsi, nous obtenons 2871 humains, politiciens, de nationalité Suisse et qui font ou ont fait partie du Conseil national.\r\n\r\nPour retrouvez les propriétés de la population, [cliquez ici](https://github.com/tbu02/swiss_national_council/blob/main/Sparqlbooks/Propri%C3%A9t%C3%A9_population.sparqlbook.md).\r\n\r\nPour retrouver une liste des informations disponibles dans Wikidata, [cliquez ici](https://github.com/tbu02/swiss_national_council/blob/main/Wikidata/wdt_persons_properties_20250605.csv).",
     "metadata": {}
   }
 ]
