@@ -1,0 +1,20 @@
+[
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Importer dans Allegrograph\r\nDans ce dossier, je vais décrire les étapes de l'importation de données dans mon référentiel Allegrograph.\r\n\r\nTout d'abord, je vérifie les propriétés de base de la population : nom, sexe, année de naissance.",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX wd: <http://www.wikidata.org/entity/>\r\nPREFIX wdt: <http://www.wikidata.org/prop/direct/>\r\nPREFIX wikibase: <http://wikiba.se/ontology#>\r\nPREFIX bd: <http://www.bigdata.com/rdf#>\r\n\r\nSELECT DISTINCT ?item ?itemLabel ?gender ?year \r\nWHERE {\r\n  ?item wdt:P106 wd:Q82955;           # profession: politician\r\n        wdt:P31 wd:Q5;                # instance of: human\r\n        wdt:P27 wd:Q39;               # country of citizenship: Switzerland\r\n        wdt:P39 wd:Q18510612;         # position held: Member of the Swiss National Council\r\n        wdt:P569 ?birthDate;          # date of birth\r\n        wdt:P21 ?gender.              # gender\r\n\r\n  BIND(year(?birthDate) AS ?year)\r\n\r\n  SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". }\r\n}\r\nLIMIT 10",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "Pour pouvoir être exploitable sur Allegrograph, il faut ajouter le SPARQL Endpoint, soit SERVICE <https://query.wikidata.org/sparql>",
+    "metadata": {}
+  }
+]
