@@ -8,13 +8,25 @@
   {
     "kind": 2,
     "language": "sparql",
-    "value": "PREFIX wd: <http://www.wikidata.org/entity/>\r\nPREFIX wdt: <http://www.wikidata.org/prop/direct/>\r\nPREFIX wikibase: <http://wikiba.se/ontology#>\r\nPREFIX bd: <http://www.bigdata.com/rdf#>\r\n\r\nSELECT DISTINCT ?item ?itemLabel ?gender ?year \r\nWHERE {\r\n  ?item wdt:P106 wd:Q82955;           # profession: politician\r\n        wdt:P31 wd:Q5;                # instance of: human\r\n        wdt:P27 wd:Q39;               # country of citizenship: Switzerland\r\n        wdt:P39 wd:Q18510612;         # position held: Member of the Swiss National Council\r\n        wdt:P569 ?birthDate;          # date of birth\r\n        wdt:P21 ?gender.              # gender\r\n\r\n  BIND(year(?birthDate) AS ?year)\r\n\r\n  SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". }\r\n}\r\nLIMIT 10",
+    "value": "PREFIX wd: <http://www.wikidata.org/entity/>\r\nPREFIX wdt: <http://www.wikidata.org/prop/direct/>\r\nPREFIX wikibase: <http://wikiba.se/ontology#>\r\nPREFIX bd: <http://www.bigdata.com/rdf#>\r\n\r\nSELECT DISTINCT ?item ?itemLabel ?gender ?year \r\nWHERE {\r\n   SERVICE <https://query.wikidata.org/sparql> {\r\n  ?item wdt:P106 wd:Q82955;           # profession: politician\r\n        wdt:P31 wd:Q5;                # instance of: human\r\n        wdt:P27 wd:Q39;               # country of citizenship: Switzerland\r\n        wdt:P39 wd:Q18510612;         # position held: Member of the Swiss National Council\r\n        wdt:P569 ?birthDate;          # date of birth\r\n        wdt:P21 ?gender.              # gender\r\n\r\n  BIND(year(?birthDate) AS ?year)\r\n  BIND ( ?itemLabel as ?itemLabel)\r\n  SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". }\r\n}\r\n}\r\nLIMIT 10",
     "metadata": {}
   },
   {
     "kind": 1,
     "language": "markdown",
-    "value": "Pour pouvoir être exploitable sur Allegrograph, il faut ajouter le SPARQL Endpoint, soit SERVICE <https://query.wikidata.org/sparql>",
+    "value": "## Préparation pour l'importation\r\nUtilisation de la requête CONSTRUCT pour préparer les triplets à l'importation dans un graphe",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX wd: <http://www.wikidata.org/entity/>\r\nPREFIX wdt: <http://www.wikidata.org/prop/direct/>\r\nPREFIX wikibase: <http://wikiba.se/ontology#>\r\nPREFIX bd: <http://www.bigdata.com/rdf#>\r\n\r\nCONSTRUCT \r\n        {?item  rdfs:label ?itemLabel.\r\n           ?item wdt:P21 ?gender.\r\n           ?item wdt:P569 ?year.\r\n           ?item  rdf:type wd:Q5. }\r\n        \r\n        WHERE {\r\n\r\n        SERVICE <https://query.wikidata.org/sparql>\r\n            {\r\n  ?item wdt:P106 wd:Q82955;           # profession: politician\r\n        wdt:P31 wd:Q5;                # instance of: human\r\n        wdt:P27 wd:Q39;               # country of citizenship: Switzerland\r\n        wdt:P39 wd:Q18510612;         # position held: Member of the Swiss National Council\r\n        wdt:P569 ?birthDate;          # date of birth\r\n        wdt:P21 ?gender.              # gender\r\n\r\n  BIND(year(?birthDate) AS ?year)\r\n  BIND ( ?itemLabel as ?itemLabel)\r\n  SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". }\r\n}\r\n        }\r\n        LIMIT 5",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Importation des triplets dans un graphe dédié",
     "metadata": {}
   }
 ]
