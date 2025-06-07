@@ -28,5 +28,23 @@
     "language": "markdown",
     "value": "## Importation des triplets dans un graphe dédié",
     "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX wd: <http://www.wikidata.org/entity/>\r\nPREFIX wdt: <http://www.wikidata.org/prop/direct/>\r\nPREFIX wikibase: <http://wikiba.se/ontology#>\r\nPREFIX bd: <http://www.bigdata.com/rdf#>\r\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\r\n\r\nINSERT {\r\n\r\n        GRAPH <https://github.com/tbu02/swiss_national_council/blob/main/Graphiques/wikidata_imported_data.md>\r\n        {?item  rdfs:label ?itemLabel.\r\n           ?item wdt:P21 ?gender.\r\n           ?item wdt:P569 ?year. \r\n           ?item  rdf:type wd:Q5.\r\n           }\r\n}\r\n        \r\n                WHERE {\r\n\r\n        SERVICE <https://query.wikidata.org/sparql>\r\n            {\r\n  ?item wdt:P106 wd:Q82955;           # profession: politician\r\n        wdt:P31 wd:Q5;                # instance of: human\r\n        wdt:P27 wd:Q39;               # country of citizenship: Switzerland\r\n        wdt:P39 wd:Q18510612;         # position held: Member of the Swiss National Council\r\n        wdt:P569 ?birthDate;          # date of birth\r\n        wdt:P21 ?gender.              # gender\r\n\r\n  BIND(year(?birthDate) AS ?year)\r\n  BIND ( ?itemLabel as ?itemLabel)\r\n  SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". }\r\n            }\r\n                }\r\n    ",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "### Ajout du label \"Person\"",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX wd: <http://www.wikidata.org/entity/>\r\nPREFIX wdt: <http://www.wikidata.org/prop/direct/>\r\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\r\nPREFIX owl: <http://www.w3.org/2002/07/owl#>\r\n\r\nINSERT DATA {\r\n    GRAPH <https://github.com/tbu02/swiss_national_council/blob/main/Graphiques/wikidata_imported_data.md>\r\n    {\r\n        wd:Q5 rdfs:label \"Person\".\r\n    }\r\n}",
+    "metadata": {}
   }
 ]
