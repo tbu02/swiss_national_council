@@ -1,0 +1,1 @@
+Ce dossier sert comme destination pour l'importation de données de wikidata
