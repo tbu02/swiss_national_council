@@ -70,5 +70,17 @@
     "language": "sparql",
     "value": "### Get the party value\r\n\r\nPREFIX wd: <http://www.wikidata.org/entity/>\r\nPREFIX wdt: <http://www.wikidata.org/prop/direct/>\r\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\r\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\r\nPREFIX p: <http://www.wikidata.org/prop/>\r\nPREFIX ps: <http://www.wikidata.org/prop/statement/>\r\nPREFIX wikibase: <http://wikiba.se/ontology#>\r\nPREFIX bd: <http://www.bigdata.com/rdf#>\r\n\r\n\r\n\r\nSELECT ?item ?os ?osLabel\r\n\r\nWHERE\r\n    {\r\n\r\n        ## \r\n        SERVICE <https://query.wikidata.org/sparql>\r\n        {\r\n            {\r\n\r\n                BIND(<https://www.wikidata.org/wiki/Q21283173> as ?item)\r\n                ?item p:P102 [ps:P102 ?os]\r\n\r\n                BIND(?osLabel AS ?osLabel)\r\n                SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". }\r\n            }        \r\n                \r\n        }\r\n    }",
     "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Choix des partis pour les analyses\r\nPetite apparté pour expliquer comment je vais analyser les partis politiques. Je vais prendre les 15 partis politiques les plus populaires sur wikidata. Dans un second temps, je les recoderai sur noto pour proposé un distribution gauche-centre-droite.",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "SELECT ?party ?partyLabel (COUNT(?person) AS ?n)\r\nWHERE {\r\n  ?party wdt:P31 wd:Q7278;\r\n         wdt:P17 wd:Q39.\r\n  \r\n  OPTIONAL {\r\n    ?person wdt:P31 wd:Q5;\r\n            wdt:P102 ?party.\r\n  }\r\n  \r\n  SERVICE wikibase:label { bd:serviceParam wikibase:language \"fr,en\". }\r\n}\r\nGROUP BY ?party ?partyLabel\r\nORDER BY DESC(?n)\r\nLimit 15",
+    "metadata": {}
   }
 ]
