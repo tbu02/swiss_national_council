@@ -1,0 +1,74 @@
+[
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Importation des données du parti politique\r\nCe carnet ajoute les données des partis politiques à notre population de recherche.",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "### Number of persons in our population\r\nPREFIX wd: <http://www.wikidata.org/entity/>\r\nPREFIX wdt: <http://www.wikidata.org/prop/direct/>\r\n\r\nSELECT (COUNT(*) as ?n)\r\nWHERE {\r\n    GRAPH <https://github.com/tbu02/swiss_national_council/blob/main/Graphiques/wikidata_imported_data.md>\r\n        {?s a wd:Q5.}\r\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "### Some examples of persons\r\nPREFIX wd: <http://www.wikidata.org/entity/>\r\nPREFIX wdt: <http://www.wikidata.org/prop/direct/>\r\n\r\nSELECT ?s ?label ?birthYear\r\nWHERE {\r\n    GRAPH <https://github.com/tbu02/swiss_national_council/blob/main/Graphiques/wikidata_imported_data.md>\r\n        {?s a wd:Q5;\r\n            rdfs:label ?label;\r\n            wdt:P569 ?birthYear}\r\n}\r\nORDER BY ?s\r\nLIMIT 3",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "### Prepare and inspect the data to be imported\r\n\r\n\r\nPREFIX wd: <http://www.wikidata.org/entity/>\r\nPREFIX wdt: <http://www.wikidata.org/prop/direct/>\r\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\r\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\r\nPREFIX wikibase: <http://wikiba.se/ontology#>\r\nPREFIX bd: <http://www.bigdata.com/rdf#>\r\n\r\nCONSTRUCT {?item wdt:P102 ?politicalparty.\r\n            ?politicalparty rdfs:label ?politicalpartyLabel}\r\nWHERE\r\n    {\r\n        GRAPH <https://github.com/tbu02/swiss_national_council/blob/main/Graphiques/wikidata_imported_data.md>\r\n\r\n        ## Find the persons in the imported graph\r\n        {SELECT ?item\r\n        WHERE \r\n                {?item a wd:Q5.}\r\n        ORDER BY ?item      \r\n        OFFSET 0\r\n        #OFFSET 10000\r\n        LIMIT 10\r\n\r\n        }\r\n        ## \r\n        SERVICE <https://query.wikidata.org/sparql>\r\n            {\r\n                ?item wdt:P102 ?politicalparty.\r\n                BIND (?politicalpartyLabel as ?politicalpartyLabel)\r\n                SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". } \r\n            }\r\n                \r\n        }",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "### To be sure, the insert query has to be carried out directly on the Allegrograph server\r\n# but it also could work if executed in this notebook\r\n## Also, you have to carry it out in three steps. The accepted limit by Wikidata \r\n## of instances in a variable ('item' in our case) appears to be 10000.\r\n## You therefore have to have three steps for a population of around 23000 persons  \r\n\r\nPREFIX wd: <http://www.wikidata.org/entity/>\r\nPREFIX wdt: <http://www.wikidata.org/prop/direct/>\r\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\r\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\r\n\r\n\r\nWITH <https://github.com/tbu02/swiss_national_council/blob/main/Graphiques/wikidata_imported_data.md>\r\nINSERT {?item wdt:P102 ?politicalparty.}\r\nWHERE\r\n    {\r\n        ## Find the persons in the imported graph\r\n        {SELECT ?item\r\n        WHERE \r\n                {?item a wd:Q5.}\r\n        ORDER BY ?item      \r\n        #OFFSET 8000\r\n        #OFFSET 16000\r\n        #OFFSET 24000\r\n        #OFFSET 32000\r\n        LIMIT 10000\r\n\r\n        }\r\n        ## \r\n        SERVICE <https://query.wikidata.org/sparql>\r\n            {\r\n                ?item wdt:P102 ?politicalparty.\r\n            }\r\n                \r\n        }",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "### Insert the label of the property\r\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\r\nPREFIX wd: <http://www.wikidata.org/entity/>\r\nPREFIX wdt: <http://www.wikidata.org/prop/direct/>\r\n\r\n\r\nINSERT DATA {\r\n  GRAPH <https://github.com/tbu02/swiss_national_council/blob/main/Graphiques/wikidata_imported_data.md>\r\n  {wdt:P102 rdfs:label 'political party'.}\r\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "### Get the number of created 'politicalparty'\r\nPREFIX wikibase: <http://wikiba.se/ontology#>\r\nPREFIX bd: <http://www.bigdata.com/rdf#>\r\nPREFIX wd: <http://www.wikidata.org/entity/>\r\nPREFIX wdt: <http://www.wikidata.org/prop/direct/>\r\n\r\n\r\n    SELECT (COUNT(*) as ?n) \r\n    WHERE {\r\n        GRAPH <https://github.com/tbu02/swiss_national_council/blob/main/Graphiques/wikidata_imported_data.md>\r\n            {\r\n                ?s wdt:P102 ?o.\r\n            }\r\n            }\r\n    ",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "### Persons without a political party\r\nPREFIX wd: <http://www.wikidata.org/entity/>\r\nPREFIX wdt: <http://www.wikidata.org/prop/direct/>\r\n\r\nSELECT (COUNT(*) as ?n)\r\nWHERE \r\n{GRAPH <https://github.com/tbu02/swiss_national_council/blob/main/Graphiques/wikidata_imported_data.md>\r\n        \r\n    {?item a wd:Q5;\r\n        rdfs:label ?label.\r\n    MINUS {\r\n            ?item wdt:P102 ?politicalparty.\r\n        }     \r\n    }\r\n}",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "### Persons with more than one political party\r\nPREFIX wikibase: <http://wikiba.se/ontology#>\r\nPREFIX bd: <http://www.bigdata.com/rdf#>\r\nPREFIX wd: <http://www.wikidata.org/entity/>\r\nPREFIX wdt: <http://www.wikidata.org/prop/direct/>\r\n\r\n\r\nSELECT ?politicalparty ?politicalpartyLabel (COUNT(*) as ?n) \r\nWHERE {\r\nGRAPH <https://github.com/tbu02/swiss_national_council/blob/main/Graphiques/wikidata_imported_data.md>\r\n{\r\n   ?item wdt:P102 ?politicalparty.\r\n    ?politicalparty rdfs:label ?politicalpartyLabel.\r\n}\r\n\r\n}\r\nGROUP BY ?politicalparty ?politicalpartyLabel\r\nORDER BY DESC(?n)\r\n\r\nLIMIT 5",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Missings",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "### test a specific person\r\nPREFIX wd: <http://www.wikidata.org/entity/>\r\nPREFIX wdt: <http://www.wikidata.org/prop/direct/>\r\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\r\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\r\n\r\n\r\nSELECT ?item ?o ?p ?statement_o\r\n    {\r\n\r\n        ## \r\n        SERVICE <https://query.wikidata.org/sparql>\r\n            {\r\n                 \r\n                BIND(<https://www.wikidata.org/wiki/Q21283173> as ?item)\r\n                {\r\n                    ?item ?p ?statement_o.\r\n                    FILTER(contains(str(?p), 'P102'))\r\n                }\r\n                OPTIONAL{\r\n                    ?item wdt:P102 ?o.\r\n                }\r\n\r\n            }\r\n                \r\n        }",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "### Get the party value\r\n\r\nPREFIX wd: <http://www.wikidata.org/entity/>\r\nPREFIX wdt: <http://www.wikidata.org/prop/direct/>\r\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\r\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\r\nPREFIX p: <http://www.wikidata.org/prop/>\r\nPREFIX ps: <http://www.wikidata.org/prop/statement/>\r\nPREFIX wikibase: <http://wikiba.se/ontology#>\r\nPREFIX bd: <http://www.bigdata.com/rdf#>\r\n\r\n\r\n\r\nSELECT ?item ?os ?osLabel\r\n\r\nWHERE\r\n    {\r\n\r\n        ## \r\n        SERVICE <https://query.wikidata.org/sparql>\r\n        {\r\n            {\r\n\r\n                BIND(<https://www.wikidata.org/wiki/Q21283173> as ?item)\r\n                ?item p:P102 [ps:P102 ?os]\r\n\r\n                BIND(?osLabel AS ?osLabel)\r\n                SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". }\r\n            }        \r\n                \r\n        }\r\n    }",
+    "metadata": {}
+  }
+]
