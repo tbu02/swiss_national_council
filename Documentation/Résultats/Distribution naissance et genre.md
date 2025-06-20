@@ -2,4 +2,4 @@
 
 
 
-![image distribution naissance](../../notebooks_jupyter/notebooks_jupyter/Images/naissances_distribution_10ans_genre.jpg)
+![image distribution naissance](../../notebooks_jupyter/Images/naissances_distribution_10ans_genre.jpg)
