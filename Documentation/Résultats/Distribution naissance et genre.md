@@ -34,4 +34,15 @@ Première constatation, le pic de la période 1941-1950. Une situation aussi com
 Concernant le genre, les femmes ont obtenu le droit de vote en Suisse seulement en 1971. Ainsi, il est logique de ne pas les voir avant ces dates. Et c'est le même phénomène qu'avec les hommes : dès que les femmes ont pu être élue, il y a un petit nombre d'entre elle, née entre 1911 et 1920, qui se sont arrivées à l'exécutif. 
 Ce qui est également intéressant de constater, c'est la lente évolution jusqu'en 1940. J'explique cela par le fait que comme ces femmes là avait déjà 30, 40, 50 et même 60 ans, elles n'ont, pour la plupart, pas d'éducation et de sensibilité politique, étant donné que c'était un domain réservé aux hommes auparavant. La première tranche d'âge qui commence à être un peu plus fortement représenter, c'est celle de 1941-1950, tranche du babyboom, mais aussi la tranche d'âge qui a grandit avec l'avénements des droits civique. Ce qui expliquerait les 26% de femmes. Phénomène qui s'accentue par la suite.
 
-Un autre point à relever, c'est que seule dans la tranche 1991-2000 
+Un autre point à relever, c'est que seule dans la tranche 1991-2000 est représenté en majorité par les femmes. Une des explications serait que les jeunes femmes sont plus politisé aujourd'hui, avec les questions féministes ou avec la libération de la parole comme *MeToo* par exemple. À l'image de la vague écologique, nous vivons aujourd'hui une vague violette qui pourrait expliquer cette poussée. Toutefois, le nombre d'individue de cette tranche d'âge est relativement faible. Il faut donc nuancer cette constatation.
+
+Un dernier point que j'observe, c'est que la tranche d'âge de 1951-1960 à le même pourcentage de femme que pour celle de 1961-1970. Même constatation pour la tranche de 1971-1980 et 1981-1990. 
+Cette équivalence est probablement une coïncidence statistique amusante. Il est probable et attendu que ces chiffres évolues, car c'est ces tranches d'âges qui vont être représentées lors des prochaines élections.
+
+## Conlusion
+
+Il est intéressant de constater que l'évolution des naissances des conseillers nationaux ainsi que la représentation du genre féminin suit un cours historique, en lien avec les différents événements de chaque époque, comme le baby boom et le pic des années 40-50 ou la vague violette et les questions féministes aujourd'hui.
+
+### Limite
+
+Une limite constaté sur cette question, c'est que l'âge d'un élu n'indique pas l'année de son élection. Par ce fait, on perd certaines informations et de la précision.
