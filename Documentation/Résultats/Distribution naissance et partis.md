@@ -21,4 +21,12 @@ Ainsi, j'ai pris les deux partis les plus populaire en suisse, qui sont diamétr
 ![Image distribution naissance et PSvsUDC 10 ans](../../notebooks_jupyter/Images/naissances_distribution_10ans_partis_PSvsUDC.jpg)
 
 Il est intéressant aussi de constater qu'il n'y a pas vraiment une tendance quis e dégage. Si l'on sait qu'aujourd'hui la suisse penche plus à droite, ces chiffres ne le relève pas. La tranche d'âge de 1941-1950, 1951-1960 et 1981-1990 est plus à gauche, du moins il y a plus de socialiste. Alors que pour les tranches d'âge de 1961-1970, 1971-1980 et 1991-2000 sont plus à droite, du moins sont UDC. Pourquoi cela? j'avance l'idée que les personnes ayant eu la majorité lors des événements de mai 68 ont grandi dans un environnement plus propice à la gauche et au idée révolutionnaire. Je reste néanmoins surpirs de constater que chez les jeunes, il y a plus d'UDC que de PS, alors que les jeunes sont généralement plus à gauche. Ceci est un point que je ne peux pas expliquer.
-Mais pour répondre à la question de recherche, à savoir, y a-t-il une évolution des partis au Parlement? La réponse est oui. Mais cette évolution est dû au changement structurel (nom de parti, fusion,...) plutôt que dû au changement de moeurs ou d'opinion. En terme d'échelle politique. Le parlement reste relativement stable et cela se ressent aussi dans la politique suisse : la démocratie suisse est réputé pour sa stabilité.
+Toutefois, si on prends les jeunes, dans le sens plus jeune que la moyenne d'âge au parlement (1974), on constate qu'il y aeffectivement nettement plus de personne qui sont à gauche, notamment la tranche d'âge 1981-1990 qui sont 61%.
+Un autre point a relevé, c'est que l'UDC devient une force majeur à partir des années 90. Ce qui pourrait coïncider avec le changement de la majorité dans ce tableau à partir des naissances des années 70.
+
+
+## Conclusion
+Pour répondre à la question de recherche, à savoir, y a-t-il une évolution des partis au Parlement? La réponse est oui. Mais cette évolution est dû au changement structurel (nom de parti, fusion,...) plutôt que dû au changement de moeurs ou d'opinion. En terme d'échelle politique. Le parlement reste relativement stable et cela se ressent aussi dans la politique suisse : la démocratie suisse est réputé pour sa stabilité.
+
+### Limite
+Une des limites pour pouvoir analyser cette évolution, c'est qu'elle se base sur les naissances et non pas sur l'année d'élection. Cela pourrait plus simplement décrir la réalité du terrain. Le problème étant qu'avec les naissances, il nous manque l'information de la législture.
